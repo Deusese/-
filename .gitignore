@@ -1,0 +1,15 @@
+TowerBro/Temp/
+XluaFramework/Library/
+XluaFramework/Logs/
+XluaFramework/UserSettings/
+XluaFramework/obj/
+XluaFramework/.vs/
+XluaFramework/Bundles/
+XluaFramework/Assets/StreamingAssets.meta
+XluaFramework/Assets/StreamingAssets/
+XluaFramework/HybridCLRData/
+XluaFramework/*.csproj
+XluaFramework/*.sln
+
+Generate/
+*.user
