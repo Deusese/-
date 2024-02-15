@@ -19,6 +19,11 @@ public class PathUtil
     /// </summary>
     public static readonly string BundleOutPath = Application.streamingAssetsPath;
 
+    public static string BundleResourcePath
+    {
+        get { return Application.streamingAssetsPath; }
+    }
+
     /// <summary>
     /// 获取unity 的相对路径
     /// </summary>
