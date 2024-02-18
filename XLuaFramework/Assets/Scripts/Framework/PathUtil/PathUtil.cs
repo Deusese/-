@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PathUtil
@@ -19,9 +21,26 @@ public class PathUtil
     /// </summary>
     public static readonly string BundleOutPath = Application.streamingAssetsPath;
 
+    /// <summary>
+    /// 只读目录
+    /// </summary>
+    public static readonly string ReadPath=Application.streamingAssetsPath;
+
+    /// <summary>
+    /// 可读写目录
+    /// </summary>
+    public static readonly string ReadWritePath = Application.persistentDataPath;
     public static string BundleResourcePath
     {
-        get { return Application.streamingAssetsPath; }
+        get
+        {
+            if (AppConst.GameMode == GameMode.UpdateMode)
+            {
+                return ReadWritePath;
+            }
+
+            return ReadPath;
+        }
     }
 
     /// <summary>
@@ -39,5 +58,37 @@ public class PathUtil
     {
         if (string.IsNullOrEmpty(path)) return string.Empty;
         return path.Trim().Replace("\\", "/");
+    }
+
+    public static string GetLuaPath(string name)
+    {
+        return string.Format("Assets/BuildResources/LuaScripts/{0}.bytes",name);
+    }
+
+    public static string GetUIPath(string name)
+    {
+        return string.Format("Assets/BuildResources/UI/Prefab/{0}.prefab",name);
+    }
+    public static string GetMusicPath(string name)
+    {
+        return string.Format("Assets/BuildResources/Audio/Music/{0}", name);
+    }
+    public static string GetSoundPath(string name)
+    {
+        return string.Format("Assets/BuildResources/Audio/Sound/{0}", name);
+    }
+    public static string GetEffectPath(string name)
+    {
+        return string.Format("Assets/BuildResources/Effect/Prefab/{0}.prefab", name);
+    }
+
+    public static string GetSpritePath(string name)
+    {
+        return string.Format("Assets/BuildResources/Sprites/{0}.prefab", name);
+    }
+
+    public static string GetScenePath(string name)
+    {
+        return string.Format("Assets/BuildResources/Scene/{0}.unity", name);
     }
 }

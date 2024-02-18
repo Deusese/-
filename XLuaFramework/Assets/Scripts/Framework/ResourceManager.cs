@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -67,9 +68,37 @@ namespace Assets.Scripts.Framework
             onComplete?.Invoke(bundleRequest?.asset);
         }
 
-        public void LoadAsset(string assetName,Action<Object> onComplete)
+        /// <summary>
+        /// 编辑器模式加载资源
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <param name="onComplete"></param>
+        private void EditorLoadAsset(string assetName ,Action<Object> onComplete)
         {
-            StartCoroutine(LoadBundleAsync(assetName, onComplete));
+            Object obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetName, typeof(Object));
+            if (obj==null)
+            {
+                Debug.LogError($"assets name is not exist:{assetName}");
+            }
+            onComplete?.Invoke(obj);
+        }
+        private void LoadAsset(string assetName,Action<Object> onComplete)
+        {
+            if (AppConst.GameMode==GameMode.EditorMode)
+            {
+                EditorLoadAsset(assetName,onComplete);
+                Debug.Log(1);
+            }
+            else
+            {
+                StartCoroutine(LoadBundleAsync(assetName, onComplete));
+                Debug.Log(2);
+            }
+        }
+
+        public void LoadUI(string assetName, Action<Object> onComplete=null)
+        {
+            LoadAsset(PathUtil.GetUIPath(assetName),onComplete);
         }
 
         void Start()
